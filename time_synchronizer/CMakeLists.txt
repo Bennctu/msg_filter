@@ -25,7 +25,7 @@ add_message_files(DIRECTORY /home/ncrl/My_WorkSpace/vs_code_ws/src/lvio/lvio_ros
 generate_messages(DEPENDENCIES std_msgs geometry_msgs sensor_msgs)
 
 catkin_package(
-DEPENDS EIGEN3 PCL
+DEPENDS PCL
 )
 
 include_directories(
@@ -37,4 +37,4 @@ add_executable(vision_synchronizer
 )
 
 
-target_link_libraries(vision_synchronizer ${catkin_LIBRARIES} ${OpenCV_LIBS} ${CERES_LIBRARIES}) 
+target_link_libraries(vision_synchronizer ${catkin_LIBRARIES} ${OpenCV_LIBS}) 

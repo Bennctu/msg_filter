@@ -20,7 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
 find_package(OpenCV REQUIRED)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-add_message_files(DIRECTORY /home/ncrl/My_WorkSpace/vs_code_ws/src/lvio/lvio_ros_msgs/msg FILES PointCloud3.msg 
+add_message_files(DIRECTORY ../lvio_ros_msgs/msg FILES PointCloud3.msg 
                                                        CorrectData.msg IMUlow.msg PoseTwist.msg)
 generate_messages(DEPENDENCIES std_msgs geometry_msgs sensor_msgs)
 

@@ -35,6 +35,9 @@ include_directories(
 add_executable(vision_synchronizer
     src/synchor_node.cpp
 )
-
-
 target_link_libraries(vision_synchronizer ${catkin_LIBRARIES} ${OpenCV_LIBS}) 
+
+add_executable(unit_test
+    src/unit_test.cpp
+)
+target_link_libraries(unit_test ${catkin_LIBRARIES} ${OpenCV_LIBS})

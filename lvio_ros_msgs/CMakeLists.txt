@@ -54,6 +54,7 @@ add_message_files(
    IMUlow.msg
    PoseTwist.msg
    PointCloud3.msg
+   Td.msg
 )
 
 ## Generate services in the 'srv' folder

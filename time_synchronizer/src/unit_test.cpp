@@ -3,27 +3,44 @@
 #include <message_filters/subscriber.h>
 #include <message_filters/synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
+#include <algorithm>
+#include <list>
+#include <vector>
 #include "lvio_ros_msgs/CorrectData.h"
 #include "lvio_ros_msgs/PointCloud3.h"
 #include "lvio_ros_msgs/Td.h"
 using namespace message_filters;
+using namespace std;
 
-void vision_handler(const lvio_ros_msgs::CorrectDataConstPtr& pose, const sensor_msgs::PointCloudConstPtr& img, const sensor_msgs::PointCloudConstPtr& cloud, const lvio_ros_msgs::TdConstPtr& td)
+void vision_handler(const lvio_ros_msgs::CorrectDataConstPtr &pose, const sensor_msgs::PointCloudConstPtr &img, const sensor_msgs::PointCloudConstPtr &cloud, const lvio_ros_msgs::TdConstPtr &td)
 {
-    std::cout << "Number of 2D feature:   " << img->channels[0].values.size() << std::endl;
-    std::cout << "Number of cloud point is:" << cloud->channels.size() << std::endl;
+    // std::cout << "Number of 2D feature:   " << img->channels[0].values.size() << std::endl;
+    // std::cout << "Number of cloud point is:" << cloud->channels.size() << std::endl;
     // ROS_INFO("img: %f", img->header.stamp.toSec());
     // ROS_INFO("pose: %f", pose->header.stamp.toSec());
-
-    // std::vector<int>::iterator it;
-    // it = std::find_if(cloud->channels)    
+    int match_cnt = 0;
+    for (unsigned int i = 0; i < img->channels[0].values.size(); i++)
+    {
+        int v = img->channels[0].values[i] + 0.5;
+        int feature_id = v / 1;
+        for (auto it = cloud->channels.begin(); it != cloud->channels.end(); it++)
+        {
+            if (it->values[0] == feature_id)
+            {
+                match_cnt++;
+                std::cout << "feature_id:" << feature_id << std::endl;
+                break;
+            }
+        }
+    }
+    std::cout << "match count:" << match_cnt << std::endl;
 }
 
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "synchronizer");
     ros::NodeHandle nh;
-    
+
     // message_filters::Subscriber<lvio_ros_msgs::PointCloud3> sub_imgs(nh, "/vins_estimator/feature", 100);
     message_filters::Subscriber<lvio_ros_msgs::CorrectData> sub_correct_data(nh, "/vins_estimator/correct_data", 100);
     message_filters::Subscriber<sensor_msgs::PointCloud> sub_vision_local_cloud(nh, "/vins_estimator/vision_local_cloud", 100);

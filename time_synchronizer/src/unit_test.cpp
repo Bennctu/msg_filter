@@ -4,7 +4,7 @@
 #include <message_filters/synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
 #include <algorithm>
-#include <list>
+// #include <list>
 #include <vector>
 #include "lvio_ros_msgs/CorrectData.h"
 #include "lvio_ros_msgs/PointCloud3.h"
@@ -24,7 +24,7 @@ void vision_handler(const lvio_ros_msgs::CorrectDataConstPtr &pose, const sensor
         int v = img->channels[0].values[i] + 0.5;
         int feature_id = v / 1;
         int cnt = 0;
-        for (auto it = cloud->channels[0].values.begin(); it != cloud->channels[0].values.end(); it++)
+        /*for (auto it = cloud->channels[0].values.begin(); it != cloud->channels[0].values.end(); it++)
         {
             if (*it == feature_id)
             {
@@ -33,9 +33,20 @@ void vision_handler(const lvio_ros_msgs::CorrectDataConstPtr &pose, const sensor
                 cnt++;
                 //break;
             }
+        }*/
+        auto it = find(cloud->channels[0].values.begin(), cloud->channels[0].values.end(), feature_id);
+        if (it == cloud->channels[0].values.end())
+            ROS_WARN("Fail to find %f", *it);
+        else
+        {
+            int index = it - cloud->channels[0].values.begin();
+            cout << "point: " << cloud->points[index] << endl;
         }
+        
         if (cnt > 1) ROS_WARN("It doesn't make sense!");
     }
+
+
     std::cout << "match count" << match_cnt << std::endl;
 }
 

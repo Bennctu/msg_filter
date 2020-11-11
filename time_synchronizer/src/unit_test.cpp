@@ -24,9 +24,9 @@ void vision_handler(const lvio_ros_msgs::CorrectDataConstPtr &pose, const sensor
         int v = img->channels[0].values[i] + 0.5;
         int feature_id = v / 1;
         int cnt = 0;
-        for (auto it = cloud->channels.begin(); it != cloud->channels.end(); it++)
+        for (auto it = cloud->channels[0].values.begin(); it != cloud->channels[0].values.end(); it++)
         {
-            if (it->values[0] == feature_id)
+            if (*it == feature_id)
             {
                 match_cnt++;
                 std::cout << "feature_id:" << feature_id << std::endl;

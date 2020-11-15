@@ -11,6 +11,7 @@
 #include "lvio_ros_msgs/Td.h"
 using namespace message_filters;
 using namespace std;
+typedef pair<vector<lvio_ros_msgs::CorrectDataConstPtr>, sensor_msgs::PointCloudConstPtr> VisionType;
 
 void vision_handler(const lvio_ros_msgs::CorrectDataConstPtr &pose, const sensor_msgs::PointCloudConstPtr &img, const sensor_msgs::PointCloudConstPtr &cloud, const lvio_ros_msgs::TdConstPtr &td)
 {
@@ -18,6 +19,7 @@ void vision_handler(const lvio_ros_msgs::CorrectDataConstPtr &pose, const sensor
     // std::cout << "Number of cloud point is:" << cloud->channels.size() << std::endl;
     // ROS_INFO("img: %f", img->header.stamp.toSec());
     // ROS_INFO("pose: %f", pose->header.stamp.toSec());
+
     int match_cnt = 0;
     for (unsigned int i = 0; i < img->channels[0].values.size(); i++)
     {
@@ -48,6 +50,16 @@ void vision_handler(const lvio_ros_msgs::CorrectDataConstPtr &pose, const sensor
 
 
     std::cout << "match count" << match_cnt << std::endl;
+
+    // It will output "Exist!!!"
+    // vector<VisionType> vision_vec;
+    // vector<lvio_ros_msgs::CorrectDataConstPtr> Poses;
+    // vision_vec.push_back(make_pair(Poses, img));
+    // if (vision_vec.empty())
+    //     cout << "Nothing" << endl;
+    // else
+    //     cout << "Exist!!!!" << endl;
+    
 }
 
 int main(int argc, char **argv)

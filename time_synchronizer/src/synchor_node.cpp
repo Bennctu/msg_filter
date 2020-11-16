@@ -14,6 +14,14 @@ void vision_handler(const lvio_ros_msgs::PointCloud3ConstPtr& img, const lvio_ro
     ROS_INFO("img : %f", img->header.stamp.toSec());
     ROS_INFO("pose : %f", pose->header.stamp.toSec());
     ROS_INFO("cloud: %f", cloud->header.stamp.toSec());
+    // It will output "Exist!!!"
+    // vector<VisionType> vision_vec;
+    // vector<lvio_ros_msgs::CorrectDataConstPtr> Poses;
+    // vision_vec.push_back(make_pair(Poses, img));
+    // if (vision_vec.empty())
+    //     cout << "Nothing" << endl;
+    // else
+    //     cout << "Exist!!!!" << endl;
 }
 
 int main(int argc, char **argv)
